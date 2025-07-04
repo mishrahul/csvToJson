@@ -12,9 +12,8 @@ public class DelimiterDetector {
             if(reader.readLine().contains(";")) delimiter = ';';
             else if(reader.readLine().contains("|")) delimiter = '|';
             else if(reader.readLine().contains("\t")) delimiter = '\t';
-            else delimiter = ',';
-
-
+            else if(reader.readLine().contains(",")) delimiter = ',';
+            else delimiter = 'X';
         return delimiter;
     }
 

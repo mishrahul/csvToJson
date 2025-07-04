@@ -7,18 +7,33 @@ import java.nio.file.*;
 import java.util.Map;
 
 public final class Csv2Json {
-    public static void main(String[] args) throws IOException {
-        CliOptions opts = CliOptions.parse(args);
+
+    static CliOptions opts;
+    public static void main(String[] args) {
+        try {
+            opts = CliOptions.parse(args);
+        } catch (RuntimeException e) {
+            System.err.println(e.getMessage());
+
+        }
 
         try (BufferedReader in = Files.newBufferedReader(Paths.get(opts.input()));
              JsonGenerator out = new JsonFactory()
                      .createGenerator(Files.newBufferedWriter(Paths.get(opts.output()))))
         {
             int inputFileLen = opts.input().length();
-            if(!opts.input().subSequence(inputFileLen-3, inputFileLen).equals("csv")) {
-                System.err.println("Error: Input file is not a valid .csv file");
-                System.exit(1);
+
+            try {
+                if(!opts.input().subSequence(inputFileLen-3, inputFileLen).equals("csv")) {
+                    //System.exit(1);
+                    throw new RuntimeException();
+                }
             }
+            catch (RuntimeException e) {
+                System.err.println("Error: Input file is not a .csv file");
+                return;
+            }
+
 
             if (opts.prettyPrint()) {
                 out.useDefaultPrettyPrinter();

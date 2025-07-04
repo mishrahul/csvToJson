@@ -9,9 +9,9 @@ public final class CliOptions {
     private final boolean prettyPrint;
 
     private static final String jarFileNmae = "csv2json-1.0-SNAPSHOT-jar-with-dependencies.jar";
-    private static final String usageSyntax = "Usage syntax: java -jar " + jarFileNmae + " inputFileName.csv outputFileName.json [-d \",\" | \"\\t\"] [--pretty] [--help]";
+    private static final String usageSyntax = "Usage syntax: java -jar " + jarFileNmae + " inputFileName.csv outputFileName.json [--pretty] [--help]";
 
-    private CliOptions(String input, String output, char delimiter, boolean prettyPrint) {
+    private CliOptions(String input, String output, boolean prettyPrint) {
         this.input = input;
         this.output = output;
         //this.delimiter = delimiter;
@@ -22,24 +22,27 @@ public final class CliOptions {
     public static CliOptions parse(String[] args) {
         if(args.length == 1 && (args[0].equals("--help") || args[0].equals("-h"))) {
             System.out.println(usageSyntax);
-            System.exit(1);
+            //System.exit(0);
+            //throw new RuntimeException("p");
         }
-        if (args.length < 2) {
-            System.err.println("Not a valid syntax, use [--help] or [-h] for help");
-            System.exit(1);
+        else if (args.length < 2) {
+            //System.err.println("Not a valid syntax, use [--help] or [-h] for help");
+           // System.exit(1);
+
+            throw new RuntimeException("Insufficient arguments, use [--help] or [-h] for help");
         }
+
+
 
 
         String input = args[0];
-        String output = args[1];
-        char delimiter = ',';
+        String output =args[1];
+        //char delimiter = ',';
         boolean pretty = false;
 
 //        java -jar csv2json-1.0-SNAPSHOT-jar-with-dependencies.jar
 //        logi.jpg output.json --pretty
 //
-
-
         for (int i = 2; i < args.length; i++) {
 //            if (args[i].equals("-d") && i + 1 < args.length) {
 //                String delimArg = args[++i];
@@ -57,20 +60,20 @@ public final class CliOptions {
 //                }
 //
 //            }
-
             if (args[i].equals("--pretty")) {
                 pretty = true;
             }
             else {
                 System.err.println("Unknown argument: " + args[i]);
-                System.exit(1);
+                //System.exit(1);
+
             }
         }
 
 
 
 
-        return new CliOptions(input, output, delimiter, pretty);
+        return new CliOptions(input, output, pretty);
     }
 
 
