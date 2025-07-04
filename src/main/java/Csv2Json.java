@@ -14,6 +14,11 @@ public final class Csv2Json {
              JsonGenerator out = new JsonFactory()
                      .createGenerator(Files.newBufferedWriter(Paths.get(opts.output()))))
         {
+            int inputFileLen = opts.input().length();
+            if(!opts.input().subSequence(inputFileLen-3, inputFileLen).equals("csv")) {
+                System.err.println("Error: Input file is not a valid .csv file");
+                System.exit(1);
+            }
 
             if (opts.prettyPrint()) {
                 out.useDefaultPrettyPrinter();
@@ -21,7 +26,7 @@ public final class Csv2Json {
 
             CSVParser parser = CSVFormat.DEFAULT
                                         .builder()
-                                        .setDelimiter(opts.delimiter())
+                                        .setDelimiter(DelimiterDetector.detectDelimiter(opts.input()))
                                         .setHeader()
                                         .setSkipHeaderRecord(true)
                                         .build()
@@ -37,5 +42,12 @@ public final class Csv2Json {
             }
             out.writeEndArray();
         }
+        catch (NoSuchFileException e) {
+            System.err.println(e.getMessage() + " File not found: Please ensure the input file path is correct.");
+        }
+        catch (IOException ioe) {
+            System.err.println(ioe.getMessage() + " An error occured.");
+        }
+
     }
 }

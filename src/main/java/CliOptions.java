@@ -5,7 +5,7 @@ import java.nio.file.*;
 public final class CliOptions {
     private final String input;
     private final String output;
-    private final char delimiter;
+    //private final char delimiter;
     private final boolean prettyPrint;
 
     private static final String jarFileNmae = "csv2json-1.0-SNAPSHOT-jar-with-dependencies.jar";
@@ -14,7 +14,7 @@ public final class CliOptions {
     private CliOptions(String input, String output, char delimiter, boolean prettyPrint) {
         this.input = input;
         this.output = output;
-        this.delimiter = delimiter;
+        //this.delimiter = delimiter;
         this.prettyPrint = prettyPrint;
 
     }
@@ -35,22 +35,30 @@ public final class CliOptions {
         char delimiter = ',';
         boolean pretty = false;
 
+//        java -jar csv2json-1.0-SNAPSHOT-jar-with-dependencies.jar
+//        logi.jpg output.json --pretty
+//
+
 
         for (int i = 2; i < args.length; i++) {
-            if ("-d".equals(args[i]) && i + 1 < args.length) {
-                String delimArg = args[++i];
-                if ("\t".equals(delimArg)) {
-                    delimiter = '\t';
-                } else if (delimArg.length() == 1) {
-                    delimiter = delimArg.charAt(0);
-                } else {
-                    System.err.println("Not a valid delimiter: " + delimArg +"\n"+
-                            "Only ',' and '\\t' are allowed as delimiters");
-                    System.exit(1);
-                }
-            }
+//            if (args[i].equals("-d") && i + 1 < args.length) {
+//                String delimArg = args[++i];
+//
+//                if (delimArg.equals("\t")) {
+//                    delimiter = '\t';
+//                }
+//                else if (delimArg.equals(",")) {
+//                    continue;
+//                }
+//                else {
+//                    System.err.println("Not a valid delimiter" +"\n" +
+//                            "Only ',' and '\\t' are allowed as delimiters");
+//                    System.exit(1);
+//                }
+//
+//            }
 
-            else if (args[i].equals("--pretty")) {
+            if (args[i].equals("--pretty")) {
                 pretty = true;
             }
             else {
@@ -68,6 +76,6 @@ public final class CliOptions {
 
     public String input() { return input; }
     public String output() { return output; }
-    public char delimiter() { return delimiter; }
+    //public char delimiter() { return delimiter; }
     public boolean prettyPrint() { return prettyPrint; }
 }
