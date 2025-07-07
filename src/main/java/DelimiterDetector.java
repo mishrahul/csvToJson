@@ -6,6 +6,7 @@ import java.nio.file.Path;
 
 public class DelimiterDetector {
 
+
     public static char detectDelimiter(String inputFilePathStr)  {
         char delimiter = 'X';
 
