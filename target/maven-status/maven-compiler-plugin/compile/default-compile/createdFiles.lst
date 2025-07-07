@@ -1,3 +1,4 @@
-DelimiterDetector.class
 CliOptions.class
+DelimiterDetector.class
+CSVfileValidator.class
 Csv2Json.class
