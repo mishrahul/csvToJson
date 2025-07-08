@@ -21,13 +21,11 @@ public class CliOptionsTest {
 
     @BeforeEach
     public void setUp() {
-        // redirect System.out to a byteArrayOutputStream
         System.setOut(new PrintStream(outputStream));
     }
 
     @AfterEach
     public void restore() {
-        // restore the original system.out after each test
         System.setOut(originalOut);
     }
 
@@ -114,9 +112,5 @@ public class CliOptionsTest {
 
         assertEquals("Unknown argument: "+ args[2]+"\r\n", errorStream.toString());
     }
-
-
-
-
 
 }
